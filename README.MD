@@ -2,8 +2,8 @@
 Project description here
 
 ##Installation##
-* NPM Install
-* Bower Install
+* npm install
+* bower install
 
 ##Grunt Commands##
 * `grunt` dist
