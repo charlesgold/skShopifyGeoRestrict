@@ -6,7 +6,8 @@ Project description here
 * Bower Install
 
 ##Grunt Commands##
-* `grunt` command - does what
+* `grunt` dist
+* `grunt` dev
 
 ##Notes##
 * notes

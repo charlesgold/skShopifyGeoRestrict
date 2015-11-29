@@ -9,4 +9,11 @@ bower_components
 vendor
 .sass-cache
 
+### Temp Development ###
+app/app.htm
+app/*.js
+app/*.css
+app/*.map
+
 ### Distribution directory ###
+dist

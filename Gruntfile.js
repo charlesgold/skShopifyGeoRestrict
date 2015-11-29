@@ -1,20 +1,6 @@
 module.exports = function(grunt) {
 
-	var cfg = {
-		appBase: 'app'
-		,distBase: 'dist'
-		,appMain: 'app.htm'
-		,distMain: 'app.htm'
-		,banner: '/*!\n' +
-		      ' * <%= pkg.name %>\n' +
-		      ' * <%= pkg.title %>\n' +
-		      ' * <%= pkg.url %>\n' +
-		      ' * @author <%= pkg.author %>\n' +
-		      ' * @version <%= pkg.version %>\n' +
-		      ' * Copyright <%= pkg.copyright %>. <%= pkg.license %> licensed.\n' +
-		      ' */\n'		
 
-	}
 
 
 
@@ -26,9 +12,10 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json')
-		cfg: {
+		,cfg: {
 			appBase: 'app'
 			,distBase: 'dist'
+			,appTemplate: 'template.htm'
 			,appMain: 'app.htm'
 			,distMain: 'app.htm'
 			,banner: '/*!\n' +
@@ -38,38 +25,41 @@ module.exports = function(grunt) {
 			      ' * @version <%= pkg.version %>\n' +
 			      ' * Copyright <%= pkg.copyright %>. <%= pkg.license %> licensed.\n' +
 			      ' */\n'
-			,sassSrc: ''
-			,appCss: ''
-			,appJs: ''
-			,distCss: ''
-			,distJs: ''      		
+			,sassSrc: 'sass/main.scss'
+			,appCss: 'app-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMM") %>.css'
+			,appJs: 'app-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMM") %>.js'
+			,distCss: 'app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMM") %>.css'
+			,distJs: 'app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMM") %>.js'
+			,distJsUglify: 'app-ug-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMM") %>.js'      		
 		}
 	    ,replace: {
 	      dist: {
-	        src: ['<%= cfg.distBase %>/<%= cfg.distMain =>']	        
-	        ,overwrite: true,
+	      	src: ['<%= cfg.appBase %>/<%= cfg.appTemplate %>']
+	        ,dest: ['<%= cfg.distBase %>/<%= cfg.distMain %>']	        
+	        //,overwrite: true
 	        ,replacements: [
 		        {
 					from: '{{ appjs }}'
-					,to: 'app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.js'
+					,to: '<%= cfg.distCss %>'
 		        }
 		        ,{
 		        	from: '{{ appcss }}'
-		        	,to: 'app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.css'
+		        	,to: '<%= cfg.distJs %>'
 		        }
 	        ]
 	      }
 	      ,dev: {
-	        src: ['<%= cfg.appBase %>/<%= cfg.appMain =>']	        
-	        ,overwrite: true,
+	      	src: ['<%= cfg.appBase %>/<%= cfg.appTemplate %>']
+	        ,dest: ['<%= cfg.appBase %>/<%= cfg.appMain %>']	        
+	        //,overwrite: true
 	        ,replacements: [
 		        {
 					from: '{{ appjs }}'
-					,to: 'app-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.js'
+					,to: '<%= cfg.appJs %>'
 		        }
 		        ,{
 		        	from: '{{ appcss }}'
-		        	,to: 'app-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.css'
+		        	,to: '<%= cfg.appCss %>'
 		        }
 	        ]
 	      }	      
@@ -83,13 +73,13 @@ module.exports = function(grunt) {
 	          src: [
 	            '<%= cfg.appBase %>/js/*.js'
 	          ]
-	          ,dest: '<%= cfg.distBase %>/app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.js'
+	          ,dest: '<%= cfg.distBase %>/<%= cfg.distJs %>'
 	      }
 	      ,dev: {
 	          src: [
 	            '<%= cfg.appBase %>/js/*.js'
 	          ]
-	          ,dest: '<%= cfg.appBase %>/app-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.js'
+	          ,dest: '<%= cfg.appBase %>/<%= cfg.appJs %>'
 	      } 	           
 	    }//Concat
 		,sass: {
@@ -99,7 +89,7 @@ module.exports = function(grunt) {
 		      ,lineNumbers: true
 		    } 
 		    ,files: {
-		      '<%= cfg.distBase =>/app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.css' : '<%= cfg.appBase %>/sass/main.scss'
+		      '<%= cfg.distBase %>/<%= cfg.distCss %>' : '<%= cfg.appBase %>/<%= cfg.sassSrc %>'
 		    }       
 		  },
 		  dev: {
@@ -107,25 +97,27 @@ module.exports = function(grunt) {
 		      //style: 'compressed'
 		    } 
 		    ,files: {
-		      '<%= cfg.appBase =>/app-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.css' : '<%= cfg.appBase %>/sass/main.scss'
+		      '<%= cfg.appBase %>/<%= cfg.appCss %>' : '<%= cfg.appBase %>/<%= cfg.sassSrc %>'
 		    }         
 		  }
 		     
 		}
+		/** not used
 		,copy: {
 		  dist: {
 		      files: [
 		          { //root htm file (template)
 		            expand: true
-		            ,cwd: '<%= cfg.appBase =>/'
-		            ,src: ['<%= cfg.appMain =>']
-		            ,dest: '<%= cfg.distBase =>/'
+		            ,cwd: '<%= cfg.appBase %>/'
+		            ,src: ['<%= cfg.appMain %>']
+		            ,dest: '<%= cfg.distBase %>/'
 		            ,flatten: true
 		            ,filter: 'isFile'
 		          }
 		      ]
-		  }
-		}			    	    		
+		  }		  
+		}
+		*/			    	    		
 		,uglify: {
 		  
 		    dist : {
@@ -134,15 +126,26 @@ module.exports = function(grunt) {
 				  ,footer: ''
 				}		    	
 				,files : {
-					'<%= cfg.distBase %>/app-ug-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.js' : ['<%= cfg.distBase %>/app-min-<%= pkg.version %>-<%= grunt.template.today("yyyymmdd-hMMss") %>.js']
+					'<%= cfg.distBase %>/<%= cfg.distJsUglify %>' : ['<%= cfg.distBase %>/<%= cfg.distJs %>']
 				}
 		    }
 		  
-		} 
+		}
+	    ,clean: {
+	      dist: ['dist']
+	      ,dev: ['<%= cfg.appBase %>/*.js','<%= cfg.appBase %>/*.css','<%= cfg.appBase %>/*.map','<%= cfg.appMain %>']
+	    }
+		,watch: {
+			app: {
+			  files: ['<%= cfg.appBase %>/js/*.js', '<%= cfg.appBase %>/<%= cfg.sassSrc %>', '<%= cfg.appBase %>/<%= cfg.appMain %>'],
+			  tasks: ['default'],
+			}
+		}	      		 
 
 	});
 
 	// Default task(s).
-	grunt.registerTask('dist', ['clean:dist','copy:dist','replace:dist','concat:dist', "sass:dist"]);  
+	grunt.registerTask('dev', ['clean:dev','concat:dev','sass:dev','replace:dev']);  
+	grunt.registerTask('dist', ['clean:dist','concat:dist','uglify:dist','sass:dist','replace:dist']);	
 
 };
