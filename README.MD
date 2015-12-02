@@ -22,8 +22,8 @@ cstShopifyGeoApp.settings.db = [];
 * Requires JQuery
 
 ##Notes##
-* [http://dev.maxmind.com/geoip/legacy/codes/iso3166/](ISO 3166 Country Codes)
-* Uses [http://freegeoip.net](freegeoip.net)
+* [ISO 3166 Country Codes](http://dev.maxmind.com/geoip/legacy/codes/iso3166/)
+* Uses [freegeoip.net](https://docs.npmjs.com/cli/install)
 
 
 #Contact#
@@ -31,4 +31,4 @@ cstShopifyGeoApp.settings.db = [];
 * Github: [http://github.com/ctopjian](http://github.com/ctopjian)
 
 #Resources#
-* [https://docs.npmjs.com/cli/install](NPM install options)
+* [NPM Install options](https://docs.npmjs.com/cli/install)
