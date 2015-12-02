@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 			,appTemplate: 'template.htm'
 			,appMain: 'app.htm'
 			,distMain: 'app.htm'
+			,vendorBase: 'vendor'
 			,banner: '/*!\n' +
 			      ' * <%= pkg.name %>\n' +			      
 			      ' * <%= pkg.repository.url %>\n' +
@@ -77,7 +78,8 @@ module.exports = function(grunt) {
 	      }
 	      ,dev: {
 	          src: [
-	            '<%= cfg.appBase %>/js/*.js'
+	          	'<%= cfg.vendorBase %>/jquery/dist/jquery.js'
+	            ,'<%= cfg.appBase %>/js/*.js'
 	          ]
 	          ,dest: '<%= cfg.appBase %>/<%= cfg.appJs %>'
 	      } 	           
@@ -138,14 +140,28 @@ module.exports = function(grunt) {
 		,watch: {
 			app: {
 			  files: ['<%= cfg.appBase %>/js/*.js', '<%= cfg.appBase %>/<%= cfg.sassSrc %>', '<%= cfg.appBase %>/<%= cfg.appMain %>'],
-			  tasks: ['default'],
+			  tasks: [''],
 			}
-		}	      		 
+		}
+		,connect: {
+			server: {
+			  options: {
+			    port: 9000,
+			    keepalive: true,
+			    base: {
+			    	path: 'app',
+			    	options: {
+			    		index: 'app.htm'			    		
+			    	}
+			    }
+			  }
+			}
+		}			      		 
 
 	});
 
 	// Default task(s).
-	grunt.registerTask('dev', ['clean:dev','concat:dev','sass:dev','replace:dev']);  
+	grunt.registerTask('dev', ['clean:dev','concat:dev','sass:dev','replace:dev','connect:server']);  
 	grunt.registerTask('dist', ['clean:dist','concat:dist','uglify:dist','sass:dist','replace:dist']);	
 
 };
