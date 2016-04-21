@@ -12,6 +12,10 @@ To add/remove country codes be sure to edit:
 ```javascript
 cstShopifyGeoApp.settings.db = [];
 ```
+You will also need to update the redirect URL (base64encoded)
+```javascript
+cstShopifyGeoApp.settings.redirectUrl 	= 'aHR0cDovL3V2Z3JhYi5jb20vcGFnZXMvYmlsbGluZy1lcnJvcg';
+```
 
 * Redirect URL is Base64 encoded
 
