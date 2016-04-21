@@ -1,5 +1,6 @@
 #Shopify - Block Country Visit#
 JS plugin to be used to block visits from countries *not* listed. The plugin is definitely not bulletproof, but a quick to to combat fraud.
+Contact me at charlie@shoppro.io if you need help customizing. 
 
 ##Installation##
 * npm install
