@@ -82,9 +82,12 @@ var cstShopifyGeoApp = {
 	}
 	,getGeoInfo: function(){
 		var _this = this;
-		$.getJSON("https://freegeoip.net/json/", function(data){
+
+		//$.getJSON("https://freegeoip.net/json/", function(data){
+		$.getJSON("http://geoip.nekudo.com/api/", function(data){			
 			_this.settings.ip = data.ip;
-			_this.settings.countryCode = data.country_code;	
+			//_this.settings.countryCode = data.country_code;	
+			_this.settings.countryCode = data.country.code;	
 			//we have to do this here
 			//to allow for callback
 			_this.setupGeoInfo();
@@ -169,7 +172,6 @@ cstShopifyGeoApp.settings.db 			= [
 	,'DE'
 	,'NZ'
 	,'IE'
-	,'NL'
 ];
 cstShopifyGeoApp.settings.enabled	=	1;
 cstShopifyGeoApp.initiate();
